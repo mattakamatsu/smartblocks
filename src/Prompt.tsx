@@ -115,6 +115,7 @@ const Prompt = ({
                 resolveAndClose(/{ref}/.test(display) ? `((${uid}))` : value);
               }}
               getAllBlocks={getAllBlocks}
+              onKeyDown={(e) => e.key === "Enter" && resolveAndClose(/{ref}/.test(display) ? `((${uid}))` : value)}
             />
           ) : formattedOptions.length ? (
             formattedOptions.length < 10 ? (
@@ -123,7 +124,10 @@ const Prompt = ({
                 onItemSelect={(v) => setValue(v)}
                 items={[formattedInitialValue, ...formattedOptions]}
                 popoverProps={{ portalClassName: "roamjs-prompt-dropdown" }}
-                ButtonProps={{ autoFocus: true }}
+                ButtonProps={{ 
+                  autoFocus: true,
+                  onKeyDown: (e) => e.key === "Enter" && resolveAndClose(/{ref}/.test(display) ? `((${uid}))` : value)
+                }}
               />
             ) : (
               <AutocompleteInput
@@ -131,6 +135,7 @@ const Prompt = ({
                 setValue={setValue}
                 options={formattedOptions.concat(value)}
                 autoFocus
+                onKeyDown={(e) => e.key === "Enter" && resolveAndClose(/{ref}/.test(display) ? `((${uid}))` : value)}
               />
             )
           ) : isPageInput ? (
@@ -139,6 +144,7 @@ const Prompt = ({
               setValue={setValue}
               onConfirm={() => resolveAndClose(value)}
               autoFocus
+              onKeyDown={(e) => e.key === "Enter" && resolveAndClose(value)}
             />
           ) : (
             <InputGroup
